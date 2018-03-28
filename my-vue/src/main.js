@@ -6,9 +6,13 @@ import VueRouter from 'vue-router'
 import App from './App'
 import {routes} from "./routers";
 import axios from 'axios'
+import {store} from './store/store'
 Vue.config.productionTip = false
 Vue.use(VueRouter)
-axios.defaults.baseURL = "https://wd2468178309upkmpi.wilddogio.com"
+//配置Vue原型（在任何组件中都可以正常使用axios）
+axios.defaults.baseURL = "https://wd2468178309upkmpi.wilddogio.com/"
+Vue.prototype.http = axios
+
 /* eslint-disable no-new */
 const router= new VueRouter({
   routes,
@@ -54,6 +58,7 @@ const router= new VueRouter({
 
 new Vue({
   router,
+  store,
   el: '#app',
   components: { App },
   template: '<App/>'

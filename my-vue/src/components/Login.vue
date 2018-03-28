@@ -30,6 +30,10 @@
         confirmPassword:""
       }
     },
+    //导航守卫
+    beforeRouteEnter:(to,from,next) =>{
+      next(vm => vm.$store.dispatch("setUser",null))
+    },
     methods:{
       onSubmit:function () {
         axios.get("/users.json").then(res =>{
@@ -45,10 +49,13 @@
               user.password === this.password;
           });
           /*判断result的长度是否大于0*/
-          if(result !=null &&result.length>0 ){
+          if(result !=null && result.length>0 ){
+            //
+            this.$store.dispatch("setUser",result[0].email)
             this.$router.push({name:"homeLink"});
           }else{
             alert("账号或密码错误");
+            this.$store.dispatch("setUser",null)
           }
         })
       }
